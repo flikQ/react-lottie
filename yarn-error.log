@@ -1,78 +1,99 @@
 Arguments: 
-  /Users/serhiiokhotnik/.nvm/versions/node/v12.13.0/bin/node /usr/local/Cellar/yarn/1.19.1/libexec/bin/yarn.js
+  /Users/flikq/.nvm/versions/node/v10.15.1/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js build
 
 PATH: 
-  /Users/serhiiokhotnik/.nvm/versions/node/v12.13.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /Users/flikq/.nvm/versions/node/v10.15.1/bin:/Users/flikq/.nvm/versions/node/v14.15.4/bin:/Users/flikq/.nvm/versions/node/v10.15.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/flikq/.nvm/versions/node/v10.15.1/bin:/Users/flikq/.rbenv/shims:/Users/flikq/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/opt/local/sbin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/flikq/.rbenv/shims:/Library/Apple/usr/bin:/Users/flikq/Dev/flutter/bin:/Users/flikq/Library/Android/sdk/tools:/Users/flikq/Library/Android/sdk/platform-tools
 
 Yarn version: 
-  1.19.1
+  1.22.4
 
 Node version: 
-  12.13.0
+  10.15.1
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/serhiiokhotnik/Projects/react-lottie-typescript/package.json: Unexpected token } in JSON at position 920
-      at JSON.parse (<anonymous>)
-      at /usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:1625:59
+  Error: Failed to replace env in config: ${NPM_TOKEN}
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:98869:13
+      at String.replace (<anonymous>)
+      at envReplace (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:98864:16)
+      at Function.normalizeConfig (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:31887:69)
+      at NpmRegistry.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:31917:34)
       at Generator.next (<anonymous>)
-      at step (/usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:304:30)
-      at /usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:315:13
+      at step (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:321:13
 
 npm manifest: 
   {
-    "name": "react-component-lib",
-    "version": "1.0.0",
+    "name": "@flikq/react-lottie",
+    "version": "0.0.11",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
+    "private": false,
     "repository": {
-      "url": "https://github.com/michal-wrzosek/react-component-lib",
+      "url": "https://github.com/flikq/react-lottie",
       "type": "git"
     },
     "license": "MIT",
     "types": "dist/index.d.ts",
     "devDependencies": {
-      "@types/react": "^16.8.25",
-      "@types/react-dom": "^16.8.5",
-      "@typescript-eslint/eslint-plugin": "^2.0.0",
-      "@typescript-eslint/parser": "^2.0.0",
-      "concurrently": "^4.1.1",
-      "eslint": "^6.2.0",
-      "eslint-config-prettier": "^6.0.0",
-      "eslint-plugin-prettier": "^3.1.0",
-      "eslint-plugin-react": "^7.14.3",
-      "prepend-file": "^1.3.1",
-      "prettier": "^1.18.2",
-      "rollup": "^1.19.4",
-      "rollup-plugin-typescript2": "^0.22.1",
-      "ts-node": "^8.3.0",
-      "tslib": "^1.10.0",
-      "typescript": "^3.5.3"
+      "@types/react": "16.8.25",
+      "@types/react-dom": "16.8.5",
+      "@typescript-eslint/eslint-plugin": "2.0.0",
+      "@typescript-eslint/parser": "2.0.0",
+      "concurrently": "4.1.1",
+      "eslint": "6.2.0",
+      "eslint-config-prettier": "6.0.0",
+      "eslint-plugin-prettier": "3.1.0",
+      "eslint-plugin-react": "7.14.3",
+      "husky": "^4.3.0",
+      "prepend-file": "1.3.1",
+      "prettier": "1.18.2",
+      "rollup": "1.19.4",
+      "rollup-plugin-typescript2": "0.22.1",
+      "ts-node": "8.3.0",
+      "tslib": "1.10.0",
+      "typescript": "3.5.3"
     },
     "peerDependencies": {
-      "react": "^16.8.6",
-      "react-dom": "^16.8.6",
+      "react": "~16.9.0",
+      "react-dom": "~16.9.0"
     },
     "scripts": {
+      "start": "concurrently --kill-others \"npm run build:watch\" \"npm run start:example\"",
+      "start:example": "cd example && yarn start",
+      "github:pages:deploy": "cd example && npm run deploy",
       "build": "rollup -c",
-      "build-watch": "rollup -c -w",
-      "install-all": "npm i && cd example && npm i",
-      "start-example": "cd example && npm start",
-      "deploy-example": "cd example && npm run deploy",
-      "dev": "concurrently --kill-others \"npm run build-watch\" \"npm run start-example\"",
-      "test": "ts-node test/test.ts",
-      "pretest": "npm run build",
-      "test:lint": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
-      "test:lint:fix": "npm run test:lint -- --fix"
+      "build:watch": "rollup -c -w",
+      "install:all": "yarn && cd example && yarn",
+      "lint:check": "eslint ./src/**/*.ts ./src/**/*.tsx ./example/src/**/*.ts ./example/src/**/*.tsx",
+      "lint:fix": "npm run lint:check -- --fix"
     },
     "files": [
       "dist"
     ],
     "dependencies": {
-      "lottie-web": "^5.5.9"
-    }
+      "lottie-web": "^5.7.3"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "yarn lint:check",
+        "pre-push": "yarn lint:check"
+      }
+    },
+    "keywords": [
+      "react",
+      "lottie",
+      "lottie-web",
+      "react-lottie",
+      "animation",
+      "bodymovin",
+      "canvas",
+      "svg",
+      "after effects",
+      "typescript"
+    ]
   }
 
 yarn manifest: 
@@ -131,29 +152,12 @@ Lockfile:
     dependencies:
       "@types/react" "*"
   
-  "@types/react-native@*":
-    version "0.60.22"
-    resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.22.tgz#ba199a441cb0612514244ffb1d0fe6f04c878575"
-    integrity sha512-LTXMKEyGA+x4kadmjujX6yAgpcaZutJ01lC7zLJWCULaZg7Qw5/3iOQpwIJRUcOc+a8A2RR7rSxplehVf9IuhA==
-    dependencies:
-      "@types/prop-types" "*"
-      "@types/react" "*"
-  
   "@types/react@*", "@types/react@^16.8.25":
     version "16.9.11"
     resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.11.tgz#70e0b7ad79058a7842f25ccf2999807076ada120"
     integrity sha512-UBT4GZ3PokTXSWmdgC/GeCGEJXE5ofWyibCcecRLUVN2ZBpXQGVgQGtG2foS7CrTKFKlQVVswLvf7Js6XA/CVQ==
     dependencies:
       "@types/prop-types" "*"
-      csstype "^2.2.0"
-  
-  "@types/styled-components@^4.1.18":
-    version "4.4.0"
-    resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.4.0.tgz#15a3d59533fd3a5bd013db4a7c4422ec542c59d2"
-    integrity sha512-QFl+w3hQJNHE64Or3PXMFpC3HAQDiuQLi5o9m1XPEwYWfgCZtAribO5ksjxnO8U0LG8Parh0ESCgVxo4VfxlHg==
-    dependencies:
-      "@types/react" "*"
-      "@types/react-native" "*"
       csstype "^2.2.0"
   
   "@typescript-eslint/eslint-plugin@^2.0.0":
